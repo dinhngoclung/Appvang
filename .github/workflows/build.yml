@@ -1,5 +1,9 @@
 name: Build APK
-on: [push]
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -11,16 +15,16 @@ jobs:
         with:
           python-version: '3.10.13'
 
-      - name: Install Buildozer
+      - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y openjdk-17-jdk zip unzip
+          sudo apt install -y openjdk-17-jdk zip unzip libffi-dev libssl-dev
           pip install --upgrade pip
-          pip install buildozer Cython==0.29.33
+          pip install buildozer Cython==0.29.33 virtualenv
 
       - name: Build APK
         run: |
-          yes | buildozer android debug
+          yes | buildozer -v android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
