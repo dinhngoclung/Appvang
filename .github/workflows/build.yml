@@ -28,10 +28,6 @@ jobs:
       with:
         channel: 'stable'
 
-    - name: Install Flet CLI
-      run: |
-        npm install -g flet-cli
-
     - name: Build Android APK
       run: |
         flet build apk
@@ -41,4 +37,3 @@ jobs:
       with:
         name: flet-android-apk
         path: build/apk/*.apk
-  
